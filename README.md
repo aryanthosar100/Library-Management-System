@@ -60,6 +60,7 @@ Make sure you have installed:
 - IDE (IntelliJ / VS Code)
 
 ---
+<img width="846" height="554" alt="image" src="https://github.com/user-attachments/assets/d3dc2e82-d319-4e1c-b180-c39aec62204b" />
 
 ## 🗄️ Database Setup
 
