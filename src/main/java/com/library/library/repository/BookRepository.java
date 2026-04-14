@@ -1,0 +1,12 @@
+package com.library.library.repository;
+
+import com.library.library.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface BookRepository extends JpaRepository<Book, Integer> {
+
+    // ✅ SEARCH BY TITLE
+    List<Book> findByTitleContaining(String title);
+}

@@ -1,0 +1,35 @@
+### GET all books
+GET http://localhost:8080/books
+
+
+### ADD new book
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "title": "Java Basics",
+  "author": "James",
+  "category": "Programming",
+  "available": true
+}
+
+
+### UPDATE book (id = 1)
+PUT http://localhost:8080/books/1
+Content-Type: application/json
+
+{
+  "title": "Advanced Java",
+  "author": "James Gosling",
+  "category": "Programming",
+  "available": false
+}
+
+
+### DELETE book (id = 1)
+DELETE http://localhost:8080/books/1
+### ISSUE BOOK
+POST http://localhost:8080/borrow?bookId=2&userName=Aryan
+
+### RETURN BOOK
+PUT http://localhost:8080/borrow/return/1
