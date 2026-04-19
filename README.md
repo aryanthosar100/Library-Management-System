@@ -59,8 +59,12 @@ Make sure you have installed:
 - MySQL
 - IDE (IntelliJ / VS Code)
 
----
-<img width="846" height="554" alt="image" src="https://github.com/user-attachments/assets/d3dc2e82-d319-4e1c-b180-c39aec62204b" />
+<img width="1903" height="905" alt="Screenshot 2026-04-19 164450" src="https://github.com/user-attachments/assets/2919a3e3-eecc-4287-8c06-100873e36e72" />
+<img width="1904" height="912" alt="Screenshot 2026-04-19 164501" src="https://github.com/user-attachments/assets/33bc8b97-892c-4beb-9737-59ce3b628fd4" />
+
+
+
+
 
 ## 🗄️ Database Setup
 
