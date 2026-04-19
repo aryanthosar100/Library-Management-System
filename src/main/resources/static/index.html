@@ -1,31 +1,139 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Library Management</title>
+    <title>Library Management System</title>
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
+
+        /* Header */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Container */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Inputs */
+        input {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Buttons */
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Book Status */
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+
+        .not-available {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            background: #333;
+            color: white;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Library Management System</h1>
+<header>
+    <h1> Library Management System</h1>
+    <p>Manage books, borrow, return, and track availability</p>
+</header>
 
-<h2>Add Book</h2>
-<input id="title" placeholder="Title">
-<input id="author" placeholder="Author">
-<input id="category" placeholder="Category">
-<button onclick="addBook()">Add Book</button>
+<div class="container">
 
-<h2>Books</h2>
-<button onclick="loadBooks()">Load Books</button>
-<ul id="bookList"></ul>
+    <!-- Static Info -->
+    <div class="card">
+        <h2>About</h2>
+        <p>This system allows users to manage books efficiently with features like adding, deleting, searching, borrowing, and returning books.</p>
+    </div>
+
+    <!-- Add Book -->
+    <div class="card">
+        <h2>Add Book</h2>
+        <input id="title" placeholder="Title">
+        <input id="author" placeholder="Author">
+        <input id="category" placeholder="Category">
+        <button class="btn-primary" onclick="addBook()">Add Book</button>
+    </div>
+
+    <!-- Book List -->
+    <div class="card">
+        <h2>Book List</h2>
+        <button class="btn-primary" onclick="loadBooks()">Load Books</button>
+        <div id="bookList"></div>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Library System | Built using Spring Boot & MySQL</p>
+</footer>
 
 <script>
 
 function addBook() {
     fetch("/books", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             title: document.getElementById("title").value,
             author: document.getElementById("author").value,
@@ -48,12 +156,22 @@ function loadBooks() {
         list.innerHTML = "";
 
         data.forEach(book => {
-            let item = document.createElement("li");
+
+            let status = book.available
+                ? '<span class="available">Available</span>'
+                : '<span class="not-available">Not Available</span>';
+
+            let item = document.createElement("div");
+            item.className = "card";
 
             item.innerHTML = `
-                ${book.title} - ${book.author} (Available: ${book.available})
-                <button onclick="deleteBook(${book.id})">Delete</button>
-                <button onclick="borrowBook(${book.id})">Borrow</button>
+                <h3>${book.title}</h3>
+                <p><b>Author:</b> ${book.author}</p>
+                <p><b>Category:</b> ${book.category}</p>
+                <p><b>Status:</b> ${status}</p>
+
+                <button class="btn-danger" onclick="deleteBook(${book.id})">Delete</button>
+                <button class="btn-success" onclick="borrowBook(${book.id})">Borrow</button>
             `;
 
             list.appendChild(item);
@@ -62,16 +180,13 @@ function loadBooks() {
 }
 
 function deleteBook(id) {
-    fetch("/books/" + id, {
-        method: "DELETE"
-    })
+    fetch("/books/" + id, { method: "DELETE" })
     .then(() => {
         alert("Book Deleted!");
         loadBooks();
     });
 }
 
-// ✅ BORROW FUNCTION
 function borrowBook(id) {
     let userName = prompt("Enter your name:");
 
